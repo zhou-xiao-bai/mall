@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaobai.mall.ums.mapper.TbMemberMapper" >
+    <resultMap id="BaseResultMap" type="com.xiaobai.mall.ums.entity.TbMember">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="username" jdbcType="VARCHAR" property="username" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+        <result column="gender" jdbcType="VARCHAR" property="gender" />
+        <result column="phone" jdbcType="VARCHAR" property="phone" />
+        <result column="email" jdbcType="VARCHAR" property="email" />
+        <result column="address" jdbcType="VARCHAR" property="address" />
+        <result column="state" jdbcType="INTEGER" property="state" />
+        <result column="description" jdbcType="VARCHAR" property="description" />
+        <result column="created" jdbcType="TIMESTAMP" property="created" />
+        <result column="updated" jdbcType="TIMESTAMP" property="updated" />
+        <result column="picture" jdbcType="VARCHAR" property="picture" />
+        <result column="role_id" jdbcType="INTEGER" property="roleId" />
+    </resultMap>
+    <insert id="insertMember" parameterType="com.xiaobai.mall.ums.entity.TbMember">
+        insert into tb_member (id, username, password,
+          phone, email, created,
+          updated, gender, address,
+          state, description,
+          role_id, picture)
+        values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+          #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP},
+          #{updated,jdbcType=TIMESTAMP}, #{gender,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
+          #{state,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR},
+          #{roleId,jdbcType=INTEGER}, #{picture,jdbcType=VARCHAR})
+    </insert>
+    <update id="updateMember" parameterType="com.xiaobai.mall.ums.entity.TbMember">
+        update tb_member
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      created = #{created,jdbcType=TIMESTAMP},
+      updated = #{updated,jdbcType=TIMESTAMP},
+      gender = #{gender,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER},
+      picture = #{picture,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      role_id = #{roleId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+    </update>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tb_member
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <select id="queryTbMemberById" resultType="com.xiaobai.mall.ums.entity.TbMember" parameterType="java.lang.Long">
+        select * from tb_member where id = #{id};
+    </select>
+    <select id="queryTbMemberCount" resultType="java.lang.Integer">
+        select count(*) from tb_member where state=#{state};
+    </select>
+    <select id="selectByMemberInfo" parameterType="string" resultMap="BaseResultMap">
+        SELECT * FROM tb_member
+        WHERE
+        state != 2
+        AND
+        (username LIKE #{search}
+        OR
+        phone LIKE #{search}
+        OR
+        email LIKE #{search}
+        OR
+        gender LIKE #{search}
+        OR
+        address LIKE #{search})
+        <if test="minDate != null and minDate != '' and maxDate != null and maxDate != ''">
+            AND
+            created BETWEEN #{minDate} AND #{maxDate}
+        </if>
+        ORDER BY
+        ${orderColumn}
+        ${orderDir}
+    </select>
+    <select id="selectByRemoveMemberInfo" resultMap="BaseResultMap">
+        SELECT * FROM tb_member
+        WHERE
+        state = 2
+        AND
+        (username LIKE #{search}
+        OR
+        phone LIKE #{search}
+        OR
+        email LIKE #{search}
+        OR
+        gender LIKE #{search}
+        OR
+        address LIKE #{search})
+        <if test="minDate != null and minDate != '' and maxDate != null and maxDate != ''">
+            AND
+            created BETWEEN #{minDate} AND #{maxDate}
+        </if>
+        ORDER BY
+        ${orderColumn}
+        ${orderDir}
+    </select>
+    <select id="queryTbMemberByUserName" parameterType="string" resultType="com.xiaobai.mall.ums.entity.TbMember">
+        select * from tb_member where username = #{userName};
+    </select>
+    <select id="queryTbMemberByPhone" parameterType="string" resultType="com.xiaobai.mall.ums.entity.TbMember">
+        select * from tb_member where phone = #{phone};
+    </select>
+    <select id="queryTbMemberByEmail" parameterType="string" resultType="com.xiaobai.mall.ums.entity.TbMember">
+        select * from tb_member where email = #{email};
+    </select>
+</mapper>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaobai.mall.pms.mapper.TbPanelMapper" >
+    <insert id="insetPanel">
+    insert into tb_panel (id, name, type,
+      sort_order, limit_num,
+      state, remark, created,
+      updated)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER},
+      #{sortOrder,jdbcType=INTEGER}, #{limitNum,jdbcType=INTEGER},
+      #{state,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP},
+      #{updated,jdbcType=TIMESTAMP})
+    </insert>
+    <update id="updatePanel" parameterType="com.xiaobai.mall.pms.entity.TbPanel">
+        update tb_panel
+        set
+            `name` = #{name,jdbcType=VARCHAR},
+            `sort_order` = #{sortOrder,jdbcType=INTEGER},
+            `limit_num` = #{limitNum,jdbcType=INTEGER},
+            `state` = #{state,jdbcType=INTEGER},
+            `remark` = #{remark,jdbcType=VARCHAR},
+            `updated` = #{updated,jdbcType=TIMESTAMP}
+            where `id` = #{id};
+    </update>
+    <delete id="delPanelById">
+        delete from tb_panel where id = #{id};
+    </delete>
+
+    <select id="getList" resultType="com.xiaobai.mall.pms.entity.TbPanel">
+        select * from tb_panel;
+    </select>
+    <select id="selectByPrimaryKey" resultType="com.xiaobai.mall.pms.entity.TbPanel">
+        select * from tb_panel where id = #{id};
+    </select>
+    <select id="queryMaxType" resultType="java.lang.Integer">
+        select max(type) from tb_panel;
+    </select>
+    <select id="getCarousel" resultType="com.xiaobai.mall.pms.entity.TbPanel">
+        select * from tb_panel where type=0;
+    </select>
+</mapper>

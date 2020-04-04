@@ -1,0 +1,33 @@
+#dubbo config
+dubbo:
+  application:
+    name: mall-admin-web
+  registry:
+    address: zookeeper://172.16.141.141:2181
+  consumer:
+    check: false
+    timeout: 5000
+spring:
+  thymeleaf:
+    cache: false
+  http:
+    encoding:
+      force: true
+      charset: utf-8
+      enabled: true
+
+server:
+  tomcat:
+    uri-encoding: UTF-8
+
+
+fdfs:
+  so-timeout: 1501 #socket连接超时时长
+  connect-timeout: 601 #连接tracker服务器超时时长
+  thumb-image:  #缩略图的宽高，可选
+    width: 60
+    height: 60
+  tracker-list: 172.16.141.131:22122  #地址，支持多个（集群）
+
+FastDFS:
+  addr: http://file.xiaobai.com/

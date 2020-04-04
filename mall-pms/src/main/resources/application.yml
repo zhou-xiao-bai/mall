@@ -1,0 +1,41 @@
+#dataSource config
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mall?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: ASDF.123
+    type: com.alibaba.druid.pool.DruidDataSource
+    #最大连接数
+    druid:
+      max-active: 100
+
+#dubbo config
+dubbo:
+  application:
+    name: mall-pms
+  registry:
+    address: 172.16.141.141:2181
+    protocol: zookeeper
+  protocol:
+    name: dubbo
+    port: 20880
+  consumer:
+        check: false
+
+#Mybatis config
+mybatis:
+  mapper-Locations: classpath:mapper/*.xml
+  #output Mybatis sql message
+  type-aliases-package: com.xiaobai.mall.pms.entity
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+
+
+# 分页合理化参数，默认值为false。当该参数设置为 true 时，pageNum<=0 时会查询第一页， pageNum>pages（超过总数时），会查询最后一页
+# 支持通过 Mapper 接口参数来传递分页参数
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true

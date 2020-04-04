@@ -1,0 +1,24 @@
+#dubbo config
+dubbo:
+  application:
+    name: mall-front-web
+  registry:
+    address: zookeeper://172.16.141.141:2181
+  consumer:
+    check: false
+    timeout: 5000
+spring:
+  thymeleaf:
+    cache: false
+  http:
+    encoding:
+      force: true
+      charset: utf-8
+      enabled: true
+
+server:
+  tomcat:
+    uri-encoding: UTF-8
+  port: 8081
+
+
